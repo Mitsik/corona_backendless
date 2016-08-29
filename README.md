@@ -1,6 +1,6 @@
 # Corona Backendless
 
-My Backendless client for Corona SDK. It is under development. It just covers my needs. Feel free to make it better.
+My Corona SDK client for [Backendless](https://backendless.com/) . It is under development. It just covers my needs. Feel free to make it better.
 
 I use [lua-promises](https://github.com/zserge/lua-promises) lib. 
 
