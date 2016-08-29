@@ -1,4 +1,4 @@
-local backendless = require( "libs.backendless" )
+local backendless = require( "backendless" )
 
 backendless.init({
 	applicationId="YOUR_APPLICATION_ID",
