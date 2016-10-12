@@ -1,7 +1,6 @@
 local json = require( "json" )
 local deffered = require( "deferred" )
 
-
 local SERVER_URL = "https://api.backendless.com/v1/"
 local APPLICATION_ID = ""
 local SECRET_KEY = ""
@@ -14,7 +13,17 @@ Backendless.Errors = {
 }
 
 
-
+local function getOperationSystemName( ... )
+	--"IOS" | "ANDROID" | "WP",
+	local platformName = system.getInfo( "platformName" )
+	if (platformName == "iPhone OS") then
+		return "IOS"
+	elseif( platformName == "Android" ) then
+		return "ANDROID"
+	else
+		return "WP"
+	end
+end
 
 local function doRequest( url, method, params )
 	local d = deffered.new()
@@ -142,6 +151,27 @@ end
 
 Backendless.UserServices.update = function( user )
 	return doRequest("users/" .. user.id, "PUT", user)
+end
+
+--------------------------------------------
+--
+---- Backendless Messaging
+--
+--------------------------------------------
+Backendless.Messaging = {}
+
+Backendless.Messaging.registerDevice = function( data )
+	assert( data.deviceToken, "deviceToken option is required" )
+	assert( data.deviceId, "deviceId option is required" )
+	local options = {
+		deviceToken = data.deviceToken,
+		deviceId = data.deviceId,
+		os = getOperationSystemName(),
+		osVersion = system.getInfo( "platformVersion" ),
+		channels = data.channels, --[channelName1, channelName2]],
+		expiration = nil--timestamp in GMT0]
+	}
+	return doRequest("messaging/registrations", "POST", data)
 end
 
 return Backendless
