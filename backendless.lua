@@ -171,7 +171,7 @@ Backendless.Messaging.registerDevice = function( data )
 		channels = data.channels, --[channelName1, channelName2]],
 		expiration = nil--timestamp in GMT0]
 	}
-	return doRequest("messaging/registrations", "POST", data)
+	return doRequest("messaging/registrations", "POST", options)
 end
 
 return Backendless
